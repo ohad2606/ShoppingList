@@ -9,12 +9,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ItemDialogFragment extends DialogFragment {
@@ -32,10 +30,6 @@ public class ItemDialogFragment extends DialogFragment {
     private String totalSum = "0.00";
     private int amount;
     float price, sum;
-    Spinner spnCategories;
-    String[] categories = AppStrings.categories;
-    String categorySelected;
-
 
     public void setListener(ItemEditListener editListener){
         this.itemEditListener = editListener;
@@ -76,7 +70,6 @@ public class ItemDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_fragment_item, container, false);
         findViews();
-        spinnerSet();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,itemsNames);
         txtItemName.setThreshold(1);
         txtItemName.setAdapter(adapter);
@@ -132,7 +125,6 @@ public class ItemDialogFragment extends DialogFragment {
     }
 
     private void findViews(){
-        spnCategories = view.findViewById(R.id.spnCategories);
         txtItemName = view.findViewById(R.id.txtItemName);
         lblShowTotal = view.findViewById(R.id.lblShowTotal);
         txtAddAmount = view.findViewById(R.id.txtAddAmount);
@@ -140,22 +132,6 @@ public class ItemDialogFragment extends DialogFragment {
         btnSaveItem = view.findViewById(R.id.btnSaveItem);
         btnCancelItem = view.findViewById(R.id.btnCancelItem);
     }
-
-    public void spinnerSet(){
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories);
-        spnCategories.setAdapter(adapter);
-        spnCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //int index = spnCategories.getSelectedItemPosition();
-                categorySelected = (String) spnCategories.getSelectedItem();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-    }
-
 
     TextWatcher txtChangeListener = new TextWatcher() {
         @Override
